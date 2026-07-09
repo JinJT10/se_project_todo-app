@@ -53,6 +53,12 @@ const closeModal = (modal) => {
   return todoElement;
 }; */
 
+const generateTodo = (data) => {
+  const todo = new Todo(data, selector);
+  todo.getView();
+  return todo;
+}
+
 addTodoButton.addEventListener("click", () => {
   openModal(addTodoPopup);
 });
