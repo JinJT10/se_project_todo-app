@@ -1,5 +1,5 @@
-import { initialTodos, validationConfig } from "../utils/constants";
-import Todo from "../components/Todo";
+import { initialTodos, validationConfig } from "../utils/constants.js";
+import Todo from "../components/Todo.js";
 
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
@@ -54,9 +54,9 @@ const closeModal = (modal) => {
 }; */
 
 const generateTodo = (data) => {
-  const todo = new Todo(data, selector);
-  todo.getView();
-  return todo;
+  const todo = new Todo(data, todoTemplate);
+  
+  return todo.getView();
 }
 
 addTodoButton.addEventListener("click", () => {

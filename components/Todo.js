@@ -1,45 +1,58 @@
 class Todo {
     constructor (data, selector) {
-        this._id = data.id;
-        this._name = data.name;
-        this._completed = data.completed;
-        this._date = data.date;
-        this._selector = selector;
+        this._data = data
+        this._templateElement = selector;
 
     }
     
-    _setEventListener() {
-        const todoDeleteBtn = this._element.querySelector(".todo__delete-btn");
-        
+    _setEventListeners() {
+        const todoDeleteBtn = this._todoElement.querySelector(".todo__delete-btn");
+        const todoCheckboxEl = this._todoElement.querySelector(".todo__completed");
+
         todoDeleteBtn.addEventListener("click", () => {
-        this._element.remove();
+        this._todoElement.remove();
          });
+
+        todoCheckboxEl.addEventListener("change", () =>{
+            this._completed = !this._completed;
+        });
 
 
 
     }
 
     getView() {
-        const todoElement = document
-        .querySelector(this._selector)
+        this._todoElement = this._templateElement
         .content
         .querySelector(".todo")
         .cloneNode(true);
         
-        const todoNameEl = todoElement.querySelector(".todo__name");
-        const todoCheckboxEl = todoElement.querySelector(".todo__completed");
-        const todoLabel = todoElement.querySelector(".todo__label");
-        const todoDate = todoElement.querySelector(".todo__date");
         
+
+        const todoNameEl = this._todoElement.querySelector(".todo__name");
+        const todoCheckboxEl = this._todoElement.querySelector(".todo__completed");
+        const todoLabel = this._todoElement.querySelector(".todo__label");
+        const todoDate = this._todoElement.querySelector(".todo__date");
         
-        todoNameEl.textContent = this._name;
-        todoCheckboxEl.checked = this._completed;
-        todoDate.textContent = this._date;
-        this._element = todoElement;
+        todoLabel.setAttribute("for", this._data.id);
+        todoCheckboxEl.id = this._data.id;
+        todoNameEl.textContent = this._data.name;
+        todoCheckboxEl.checked = this._data.completed;
     
 
-        
-        return this._element;
+        if (!isNaN(this._data.date)) {
+            todoDate.textContent = `Due: ${this._data.date.toLocaleString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+        })}`;
+        } else {
+            todoDate.style.display = "none";
+        }
+
+
+        this._setEventListeners();
+        return this._todoElement;
     }
 }
 
