@@ -1,5 +1,7 @@
 import { initialTodos, validationConfig } from "../utils/constants.js";
 import Todo from "../components/Todo.js";
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+
 
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
@@ -55,7 +57,6 @@ const closeModal = (modal) => {
 
 const generateTodo = (data) => {
   const todo = new Todo(data, todoTemplate);
-  
   return todo.getView();
 }
 
@@ -76,7 +77,7 @@ addTodoForm.addEventListener("submit", (evt) => {
   const date = new Date(dateInput);
   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
-  const values = { name, date };
+  const values = { name, date, id: uuidv4() };
   const todo = generateTodo(values);
   todosList.append(todo);
   closeModal(addTodoPopup);
