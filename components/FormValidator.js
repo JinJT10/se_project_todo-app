@@ -1,5 +1,5 @@
 class FormValidator {
-    constructor( settings, formElement) {
+    constructor(settings, formElement) {
         this._settings = settings
         this._formElement = formElement
     }
@@ -9,14 +9,23 @@ class FormValidator {
 
     enableValidation() {
        const formInput = this._formElement.querySelectorAll(this._settings.inputSelector)
-
+       
         formInput.forEach((input) => {
-            if (input.validity.valid) {
-
+            const errorElement = this._formElement.querySelector(`#${input.id}-error`);
+            
+            if (!input.validity.valid) {
+                errorElement.textContent = input.validationMessage;
+                errorElement.classList.add(this._settings.errorClass);
+                errorElement.classList.add(this._settings.inputErrorClass);
             } else {
-                
+                errorElement.textContent = "";
+                errorElement.classList.remove(this._settings.errorClass);
+                errorElement.classList.remove(this._settings.inputErrorClass);
             }
         });
     }
     
 }
+
+
+export default FormValidator;
