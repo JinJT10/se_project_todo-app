@@ -4,6 +4,13 @@ class FormValidator {
         this._formElement = formElement
     }
 
+    _checkInputValidity() {
+
+    }
+
+    _toggleButtonState() {
+        
+    }
 
 
 
