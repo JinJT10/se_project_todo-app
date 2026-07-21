@@ -4,8 +4,19 @@ class FormValidator {
         this._formElement = formElement
     }
 
-    _checkInputValidity() {
-
+    _checkInputValidity(input) {
+        const errorElement = this._formElement.querySelector(`#${input.id}-error`);
+            
+        if (!input.validity.valid) {
+            errorElement.textContent = input.validationMessage;
+            errorElement.classList.add(this._settings.errorClass);
+            errorElement.classList.add(this._settings.inputErrorClass);
+        } else {
+            errorElement.textContent = "";
+            errorElement.classList.remove(this._settings.errorClass);
+            errorElement.classList.remove(this._settings.inputErrorClass);
+        }
+        
     }
 
     _toggleButtonState() {
@@ -18,17 +29,7 @@ class FormValidator {
        const formInput = this._formElement.querySelectorAll(this._settings.inputSelector)
        
         formInput.forEach((input) => {
-            const errorElement = this._formElement.querySelector(`#${input.id}-error`);
-            
-            if (!input.validity.valid) {
-                errorElement.textContent = input.validationMessage;
-                errorElement.classList.add(this._settings.errorClass);
-                errorElement.classList.add(this._settings.inputErrorClass);
-            } else {
-                errorElement.textContent = "";
-                errorElement.classList.remove(this._settings.errorClass);
-                errorElement.classList.remove(this._settings.inputErrorClass);
-            }
+            this._checkInputValidity(input);
         });
     }
     
