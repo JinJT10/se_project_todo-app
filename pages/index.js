@@ -11,6 +11,8 @@ const todoTemplate = document.querySelector("#todo-template");
 const todosList = document.querySelector(".todos__list");
 
 const formValidator = new FormValidator(validationConfig, addTodoForm);
+formValidator.enableValidation();
+
 
 const openModal = (modal) => {
   modal.classList.add("popup_visible");
@@ -46,6 +48,7 @@ addTodoForm.addEventListener("submit", (evt) => {
   const todo = generateTodo(values);
   todosList.append(todo);
   closeModal(addTodoPopup);
+  formValidator.resetValidation();
 });
 
 initialTodos.forEach((item) => {
