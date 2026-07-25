@@ -1,7 +1,7 @@
 class FormValidator {
     constructor(settings, formElement) {
-        this._settings = settings
-        this._formElement = formElement
+        this._settings = settings;
+        this._formElement = formElement;
     }
     
     _setEventListeners() {
@@ -23,11 +23,11 @@ class FormValidator {
         if (!input.validity.valid) {
             errorElement.textContent = input.validationMessage;
             errorElement.classList.add(this._settings.errorClass);
-            errorElement.classList.add(this._settings.inputErrorClass);
+            input.classList.add(this._settings.inputErrorClass);
         } else {
             errorElement.textContent = "";
             errorElement.classList.remove(this._settings.errorClass);
-            errorElement.classList.remove(this._settings.inputErrorClass);
+            input.classList.remove(this._settings.inputErrorClass);
         }
         
     }
@@ -46,6 +46,12 @@ class FormValidator {
 
 
     resetValidation() {
+        this._inputList.forEach((input) => {
+            const errorElement = this._formElement.querySelector(`#${input.id}-error`);
+            errorElement.textContent = "";
+            errorElement.classList.remove(this._settings.errorClass);
+            input.classList.remove(this._settings.inputErrorClass);
+        });
         this._formElement.reset();
         this._toggleButtonState();
     }
