@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+// import TodoCounter from "../components/TodoCounter";
+
 
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopupEl = document.querySelector("#add-todo-popup");
@@ -27,8 +29,21 @@ const section = new Section({
 });
 section.renderItems();
 
-const addPopupTodo = new PopupWithForm();
+const addPopupTodo = new PopupWithForm("#add-todo-popup", (values) => {
+  
+  const name = values.name;
+  const dateInput = values.date;
 
+  const date = new Date(dateInput);
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+  const inputValues = { name, date, id: uuidv4() };
+
+  const todo = generateTodo(inputValues)
+  section.addItem(todo);
+  closeModal(addTodoPopupEl);
+  formValidator.resetValidation()
+});
+addPopupTodo.setEventListeners();
 const formValidator = new FormValidator(validationConfig, addTodoForm);
 formValidator.enableValidation();
 
@@ -53,7 +68,7 @@ addTodoCloseBtn.addEventListener("click", () => {
 
 
 
-addTodoForm.addEventListener("submit", (evt) => {
+/*addTodoForm.addEventListener("submit", (evt) => {
   evt.preventDefault()
   if(!addTodoForm.checkValidity()) { 
     return;
@@ -69,6 +84,6 @@ addTodoForm.addEventListener("submit", (evt) => {
   section.addItem(todo);
   closeModal(addTodoPopupEl);
   formValidator.resetValidation();
-});
+});*/
 
 
