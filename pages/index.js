@@ -34,20 +34,24 @@ const addPopupTodo = new PopupWithForm("#add-todo-popup", (values) => {
   const name = values.name;
   const dateInput = values.date;
 
+
+
   const date = new Date(dateInput);
   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
   const inputValues = { name, date, id: uuidv4() };
 
   const todo = generateTodo(inputValues)
   section.addItem(todo);
-  closeModal(addTodoPopupEl);
+  addPopupTodo.close()
   formValidator.resetValidation()
 });
 addPopupTodo.setEventListeners();
+
+
 const formValidator = new FormValidator(validationConfig, addTodoForm);
 formValidator.enableValidation();
 
-
+/*
 const openModal = (modal) => {
   modal.classList.add("popup_visible");
 };
@@ -56,34 +60,9 @@ const closeModal = (modal) => {
   modal.classList.remove("popup_visible");
 };
 
-
+*/
 addTodoButton.addEventListener("click", () => {
-  openModal(addTodoPopupEl);
+  addPopupTodo.open();
 });
-
-addTodoCloseBtn.addEventListener("click", () => {
-  closeModal(addTodoPopupEl);
-});
-
-
-
-
-/*addTodoForm.addEventListener("submit", (evt) => {
-  evt.preventDefault()
-  if(!addTodoForm.checkValidity()) { 
-    return;
-  };
-  const name = evt.target.name.value;
-  const dateInput = evt.target.date.value;
-
-  const date = new Date(dateInput);
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
-  const values = { name, date, id: uuidv4() };
-
-  const todo = generateTodo(values)
-  section.addItem(todo);
-  closeModal(addTodoPopupEl);
-  formValidator.resetValidation();
-});*/
 
 
