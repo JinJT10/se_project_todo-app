@@ -1,9 +1,6 @@
-import { initialTodos } from "../utils/constants.js";
-
 class TodoCounter {
   constructor(todos, selector) {
     this._element = document.querySelector(selector);
-    this._completed = 0;
     this._total = todos.length;
     this._completed = todos.filter((item) =>{
         return item.completed === true;
