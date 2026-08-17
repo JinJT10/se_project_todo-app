@@ -23,12 +23,17 @@ const generateTodo = (data) => {
 const section = new Section({
   items: initialTodos,
   renderer: (item) => {
-    const todo = generateTodo(item);
-    section.addItem(todo);
+    renderTodo(item);
   },
   containerSelector: ".todos__list",
 });
+
+const renderTodo = (item) => { 
+  const el = generateTodo(item); 
+  section.addItem(el); };
 section.renderItems();
+
+
 
 
 const addPopupTodo = new PopupWithForm("#add-todo-popup", (values) => {
@@ -39,8 +44,7 @@ const addPopupTodo = new PopupWithForm("#add-todo-popup", (values) => {
   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
   const inputValues = { name, date, id: uuidv4() };
 
-  const todo = generateTodo(inputValues);
-  section.addItem(todo);
+  renderTodo(inputValues);
   todoCounter.updateTotal(true);
   addPopupTodo.close();
   formValidator.resetValidation();
