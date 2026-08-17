@@ -20,6 +20,11 @@ const generateTodo = (data) => {
   return todo.getView();
 };
 
+const renderTodo = (item) => { 
+  const el = generateTodo(item); 
+  section.addItem(el); };
+
+
 const section = new Section({
   items: initialTodos,
   renderer: (item) => {
@@ -27,10 +32,6 @@ const section = new Section({
   },
   containerSelector: ".todos__list",
 });
-
-const renderTodo = (item) => { 
-  const el = generateTodo(item); 
-  section.addItem(el); };
 section.renderItems();
 
 
